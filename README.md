@@ -3,9 +3,11 @@ Project Vulture DB will be an SQL based personal DB that will come pre-configure
 
 # Developers
 Aadiraj Anil - Development
+
 Contact - aadirajanil726@gmail.com
 
 
 Ayushman Kalita - Testing and Marketing
+
 Contact - ayushman.itor@gmail.com
 
