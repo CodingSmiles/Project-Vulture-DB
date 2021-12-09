@@ -3,11 +3,9 @@ Project Vulture DB will be an SQL based personal DB that will come pre-configure
 We offer free pre-configured copies to make it easy for users to use our app, we provide everything and more to build Vulture with ease.
 
 # Developers
-Aadiraj Anil - Development
-Contact - aadirajanil726@gmail.com
+Aadiraj Anil - Development, Contact - aadirajanil726@gmail.com
 
 
-Ayushman Kalita - Testing and Marketing
-Contact - ayushman.itor@gmail.com
+Ayushman Kalita - Testing and Marketing, Contact - ayushman.itor@gmail.com
 
 ```CodingSmiles```
