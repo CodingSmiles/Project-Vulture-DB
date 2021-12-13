@@ -5,27 +5,35 @@ import sqlite3
 
 main = Tk()
 reader = Tk()
+reader.geometry("300x300")
+main.resizable(False, False)
+
+
+def clearTable() :
+    cursor.execute('DELETE FROM cars;',);
+
 
 def sendData():
-    titleContent = titleBox.get()
-    location = placeBox.get()
-    yearStr = yearBox.get()
-    yearInt = int(yearStr)
-    cursor.execute("INSERT INTO people (title, place, year) VALUES(?, ?, ?)", [titleContent, location, yearInt])
-    cursor.execute("SELECT * FROM people")
-    sendButton.config(state=DISABLED)
+    company = (companyBox.get())
+    model = (modelBox.get())
+    year = (yearBox.get())
+    cursor.execute("INSERT INTO cars (company, model, year) VALUES(?, ?, ?)", [company, model, year])
+    companyBox.delete(0, END)
+    modelBox.delete(0, END)
+    yearBox.delete(0, END)
+
 
 def readData() :
     global data
-    global list1
-    global listLength
-    list1 = []
-    listLength = len(list1)
-    data = cursor.execute('''SELECT * FROM people''')
+    global dataLabel
+    global labelList
+    labelList = []
+    data = cursor.execute('''SELECT * FROM cars''')
     for row in data:
-        list1.append(row)
-        listLength = len(list1)
-    dataLabel = Label(reader, text=list1)
+        dataLabel = Label(reader, text=row)
+        dataLabel.pack()
+        labelList.append(dataLabel)
+
 
 def closeConn() :
     connection.commit()
@@ -33,28 +41,40 @@ def closeConn() :
     exit()
 
 
-main.title("SQL Test")
-reader.title("View")
-connection = sqlite3.connect('people.db')
+def clearData() :
+    for dataLabel in labelList:
+        dataLabel.destroy()
+
+
+main.title("Vulture DB")
+reader.title("Data")
+connection = sqlite3.connect('cars.db')
 cursor = connection.cursor()
-cursor.execute('''CREATE TABLE IF NOT EXISTS people
-             (title TEXT, place TEXT, year INT)''')
-titleBox = Entry(main, width=30, borderwidth=10)
-titleBox.grid(row=0, column=0)
-placeBox = Entry(main, width=30, borderwidth=10)
-placeBox.grid(row=1, column=0)
+cursor.execute('''CREATE TABLE IF NOT EXISTS cars
+             (company TEXT, model TEXT, year INT)''')
+companyBox = Entry(main, width=30, borderwidth=10)
+companyBox.grid(row=0, column=1)
+
+modelBox = Entry(main, width=30, borderwidth=10)
+modelBox.grid(row=1, column=1)
 yearBox = Entry(main, width=30, borderwidth=10)
-yearBox.grid(row=2, column=0)
+yearBox.grid(row=2, column=1)
 sendButton = Button(main, text="Enter Data", padx=10, pady=10, bg="green", command=sendData)
-closeButton = Button(main, text="Save And Close", padx=10, pady=10, bg="red", command=closeConn)
-sendButton.grid(row=3, column=0)
 sendButton.grid(row=4, column=0)
-titleLabel = Label(main, text="Title").grid(row=0, column=1)
-placeLabel = Label(main, text="Place").grid(row=1, column=1)
-yearLabel = Label(main, text="Year").grid(row=2, column=1)
+closeButton = Button(main, text="Save And Close", padx=10, pady=10, bg="red", command=closeConn)
+closeButton.grid(row=4, column=1)
+companyLabel = Label(main, text="Company").grid(row=0, column=0)
+modelLabel = Label(main, text="Model").grid(row=1, column=0)
+yearLabel = Label(main, text="Year").grid(row=2, column=0)
 readButton = Button(reader, text="Read", padx=10, pady=10, bg="green", command=readData)
-readButton.grid(row=0, column=0)
-expLabel = Label(reader, text="Press to Read All Data").grid(row=0, column=1)
+readButton.pack()
+clearButton = Button(reader, text="Clear Printed Lines", padx=10, pady=10, bg="red", command=clearData)
+clearButton.pack()
+clearTableButton = Button(reader, text="Clear All Table Rows", padx=10, pady=10, bg="red", command=clearTable)
+clearTableButton.pack()
+credit = Label(main, text="Made By Aadiraj Anil")
+credit.grid(row=5, column=1)
+
 
 main.mainloop()
 reader.mainloop()
