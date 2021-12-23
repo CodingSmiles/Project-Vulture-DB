@@ -15,6 +15,8 @@ The single window is shown below
 
 Note - While using the Dual Window version, move the top window off the reader or the reader will be hidden. This happens because in the dual window version, both windows get created at the center of the screen.
 
+Note - sw is Single Window and dw is Double Window
+
 # Developers
 Please create an issue here to note bugs and feel free to contact me about any other things
 
