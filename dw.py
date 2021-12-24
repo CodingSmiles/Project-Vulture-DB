@@ -2,10 +2,10 @@
 from sqlite3.dbapi2 import connect
 from tkinter import *
 import sqlite3
-from time import sleep
 
 main = Tk()
 reader = Tk()
+reader.minsize(220, 125)
 main.resizable(False, False)
 
 def clearTable() :
@@ -34,6 +34,7 @@ def readData() :
         dataLabel = Label(reader, text=row)
         dataLabel.pack()
         labelList.append(dataLabel)
+    clearButton.config(state=ACTIVE, bg="red", fg="black")
 
 
 def closeConn() :
@@ -45,10 +46,11 @@ def closeConn() :
 def clearData() :
     for dataLabel in labelList:
         dataLabel.destroy()
+    clearButton.config(state=DISABLED, bg="grey", fg="grey")
 
 
 main.title("Vulture DB")
-reader.title("Data")
+reader.title("Reader")
 connection = sqlite3.connect('cars.db')
 cursor = connection.cursor()
 cursor.execute('''CREATE TABLE IF NOT EXISTS cars
@@ -60,8 +62,7 @@ modelBox = Entry(main, width=30, borderwidth=10)
 modelBox.grid(row=1, column=1)
 yearBox = Entry(main, width=30, borderwidth=10)
 yearBox.grid(row=2, column=1)
-sendButton = Button(main, text="Enter Data", padx=10, pady=10, bg="green", command=sendData)
-sendButton.grid(row=4, column=0)
+sendButton = Button(main, text="Enter Data", padx=10, pady=10, bg="green", command=sendData).grid(row=4, column=0)
 closeButton = Button(main, text="Save And Close", padx=10, pady=10, bg="red", command=closeConn)
 closeButton.grid(row=4, column=1)
 companyLabel = Label(main, text="Company").grid(row=0, column=0)
@@ -69,12 +70,11 @@ modelLabel = Label(main, text="Model").grid(row=1, column=0)
 yearLabel = Label(main, text="Year").grid(row=2, column=0)
 readButton = Button(reader, text="Read", padx=10, pady=10, bg="green", command=readData)
 readButton.pack()
-clearButton = Button(reader, text="Clear Printed Lines", padx=10, pady=10, bg="red", command=clearData)
+clearButton = Button(reader, text="Clear Printed Lines", padx=10, pady=10, bg="grey", fg="grey", command=clearData, state=DISABLED)
 clearButton.pack()
-clearTableButton = Button(reader, text="Clear All Table Rows", padx=10, pady=10, bg="red", command=clearTable)
-clearTableButton.pack()
-credit = Label(main, text="Made By Aadiraj Anil")
-credit.grid(row=5, column=0)
+clearTableButton = Button(reader, text="Clear All Table Rows", padx=10, pady=10, bg="red", command=clearTable).pack()
+credit = Label(main, text="Made By Aadiraj Anil").grid(row=5, column=0)
+
 
 main.mainloop()
 reader.mainloop()
